@@ -10,7 +10,7 @@ jobs:
 
     env:
       IMAGE_BACKEND: ${{ secrets.DOCKERHUB_USER }}/viatab-backend
-      IMAGE_FRONTEND: ${{ secrets.DOCKERHUB_USER }}/viatab-frontend
+      IMAGE_FRONTEND: ${{ secrets.DOCKERHUB_USER }}/frontend
 
     steps:
       - name: Checkout code
