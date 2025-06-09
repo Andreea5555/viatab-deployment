@@ -1,16 +1,23 @@
-
+# Build Stage
 FROM maven:3.9.4-eclipse-temurin-17 as build
 
 WORKDIR /app
 
+# Copying the entire project
 COPY . .
 
+# Making the Maven wrapper executable
+RUN chmod +x ./mvnw
+
+# Building the project and skip tests
 RUN ./mvnw clean package -DskipTests
 
+# Runtime Stage 
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
+# Copying the compiled JAR from the build stage
 COPY --from=build /app/target/viatab-backend-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8080
