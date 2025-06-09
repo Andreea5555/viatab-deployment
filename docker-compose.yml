@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: viatab-mongodb
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - viatab-network
+
+  backend:
+    build: ./viatab-backend
+    container_name: viatab-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:password@mongodb:27017/viatab?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - viatab-network
+
+  frontend:
+    build: ./frontend
+    container_name: viatab-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - viatab-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  viatab-network:
+    driver: bridge
