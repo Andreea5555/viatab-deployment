@@ -32,5 +32,5 @@ jobs:
 
       - name: Build & Push Frontend
         run: |
-          docker build -t $IMAGE_FRONTEND ./frontend
+          docker build -f ./frontend/Dockerfile -t $IMAGE_FRONTEND ./frontend
           docker push $IMAGE_FRONTEND
