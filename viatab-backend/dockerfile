@@ -2,7 +2,7 @@
 FROM maven:3.9.4-eclipse-temurin-17 as build
 
 WORKDIR /app
-w
+
 COPY . .
 
 # Ensuring once again mvnw has correct line endings + is executable
